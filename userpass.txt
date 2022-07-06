@@ -1,2 +1,0 @@
-user: user_bd
-pass: j09ZcIPzS7Kk2uOS
