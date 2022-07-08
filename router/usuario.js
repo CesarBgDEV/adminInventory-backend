@@ -78,7 +78,7 @@ router.put('/:usuarioId', async function(req,res){
 
     }catch(error){
         console.log(error);
-        res.send('Ocurrio un error')
+        res.send('Ocurrio un error');
     }
 });
 

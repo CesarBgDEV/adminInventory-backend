@@ -13,11 +13,11 @@ const EstadoEquipoSchema = Schema({
             'Inactivo'
         ],
     },
-    fechaCreacion{
+    fechaCreacion:{
         type: Date,
         required: true,
     },
-    fechaActualizacion{
+    fechaActualizacion:{
         type: Date,
         required: true,
     },

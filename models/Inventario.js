@@ -13,10 +13,10 @@ const InventarioSchema = Schema({
         type: String,
         required: true,
     },
-    serviceTag{
+    serviceTag:{
         type: String,
     },
-    af{
+    af:{
         type: Number,
     },
     foto: {
