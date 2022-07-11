@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Inventario = require('../models/Inventario');
+const {validarInventario} = require('../helpers/validar-inventario');
 
 const router = Router();
 
@@ -24,16 +25,20 @@ router.get('/', async function(req,res){
         res.send(inventario);
     } catch (error) {
         console.log(error);
-        res.send("Ocurrio un error");
+        res.status(500).send("Ocurrio un error");
     }
 });
 
 //ASIGNAR UN NUEVO EQUIPO
 router.post('/', async function(req,res){
     try {
+        const validaciones = validarInventario(req);
+        if(validaciones.length > 0){
+            return res.status(400).send(validaciones);
+        }
         const existeInventarioSerial = await Inventario.findOne({ serial: req.body.serial });
         if(existeInventarioSerial){
-            return res.send('Ya existe el serial para otro equipo');
+            return res.status(400).send('Ya existe el serial para otro equipo');
         }
 
         let inventario = new Inventario();
@@ -57,22 +62,27 @@ router.post('/', async function(req,res){
         res.send(inventario);
     } catch (error) {
         console.log(error);
-        res.send("Ocurrio un error");
+        res.status(500).send("Ocurrio un error al consultar inventarios");
     }
 });
 
 router.put('/:inventarioId', async function(req,res){
     try {
+        const validaciones = validarInventario(req);
+        if(validaciones.length > 0){
+            return res.status(400).send(validaciones);
+        }
+
 
         let inventario = await Inventario.findById(req.params.inventarioId);
         if(!inventario){
-            return res.send("Inventraio no existe").status(400);
+            return res.status(400).send("Inventraio no existe");
         }
 
 
         const existeInventarioSerial = await Inventario.findOne({ serial: req.body.serial, _id: {$ne: inventario._id} });
         if(existeInventarioSerial){
-            return res.send('Ya existe el serial para otro equipo');
+            return res.status(400).send('Ya existe el serial para otro equipo');
         }
 
         inventario.serial = req.body.serial;
@@ -94,7 +104,7 @@ router.put('/:inventarioId', async function(req,res){
         res.send(inventario);
     } catch (error) {
         console.log(error);
-        res.send("Ocurrio un error");
+        res.status(500).send("Ocurrio un error al consultar inventarios");
     }
 });
 

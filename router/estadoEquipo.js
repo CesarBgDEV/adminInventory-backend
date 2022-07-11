@@ -1,5 +1,7 @@
 const { Router } = require('express');
 const EstadoEquipo = require('../models/EstadoEquipo');
+const {validarEstadoEquipo} = require('../helpers/validar-estadoEquipo');
+
 
 const router = Router();
 
@@ -10,7 +12,7 @@ router.get('/', async function(req,res){
         res.send(tipos);
     } catch (error) {
         console.log(error);
-        res.send("Ocurrio un error");
+        res.status(500).send("Ocurrio un error al consultar estado de equipo");
     }
 });
 
@@ -18,6 +20,11 @@ router.get('/', async function(req,res){
 //Crear ESTADO DE EQUIPO
 router.post('/', async function(req,res){
     try {
+        const validaciones = validarEstadoEquipo(req);
+        if(validaciones.length > 0){
+            return res.status(400).send(validaciones);
+        }
+
         console.log(req.body);
         let estadoEquipo = new EstadoEquipo();
 
@@ -32,16 +39,21 @@ router.post('/', async function(req,res){
 
     } catch (error) {
         console.log(error);
-        res.send("Ocurrio un error");
+        res.status(500).send("Ocurrio un error al consultar estado de equipo");
     }
 });
 
 router.put('/:estadoEquipoId', async function(req,res){
     try {
+        const validaciones = validarEstadoEquipo(req);
+        if(validaciones.length > 0){
+            return res.status(400).send(validaciones);
+        }
+
         console.log(req.body, req.params);
         let estadoEquipo = await EstadoEquipo.findById(req.params.estadoEquipoId);
         if(!estadoEquipo){
-            return res.send('Estado del equipo no existe');
+            return res.status(400).send('Estado del equipo no existe');
         }
         estadoEquipo.nombre = req.body.nombre;
         estadoEquipo.estado = req.body.estado;
@@ -52,7 +64,7 @@ router.put('/:estadoEquipoId', async function(req,res){
 
     } catch (error) {
         console.log(error);
-        res.send('Ocurrio un pendejo');
+        res.status(500).send('Ocurrio un error al consultar estado de equipo');
     }
 });
 

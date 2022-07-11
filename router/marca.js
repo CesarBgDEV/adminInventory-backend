@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Marca = require('../models/Marca');
+const {validarMarca} = require('../helpers/validar-marca');
 
 const router = Router();
 
@@ -7,6 +8,11 @@ const router = Router();
 //Crear Marca
 router.post('/', async function(req,res){
     try {
+        const validaciones = validarMarca(req);
+        if(validaciones.length > 0){
+            return res.status(400).send(validaciones);
+        }
+
         console.log(req.body);
 
         let marca = new Marca();
@@ -22,7 +28,7 @@ router.post('/', async function(req,res){
         
     } catch (error) {
         console.log(error);
-        res.send("Ocurrió un error");
+        res.status(500).send("Ocurrió un error al consultar marca");
     }
     
 });
@@ -35,16 +41,20 @@ router.get('/', async function(req,res){
         res.send(marcas);
     } catch (error) {
         console.log(error);
-        res.send("Ocurrio un error");
+        res.status(500).send("Ocurrio un error al consultar marca");
     }
 });
 
 router.put('/:marcaId', async function(req,res){
     try {
+        const validaciones = validarMarca(req);
+        if(validaciones.length > 0){
+            return res.status(400).send(validaciones);
+        }
         console.log(req.body , req.params);
         let marca = await Marca.findById(req.params.marcaId);
         if(!marca){
-            return res.send('Marca no existe');
+            return res.status(400).send('Marca no existe');
         }
         marca.nombre = req.body.nombre;
         marca.estado = req.body.estado;
@@ -55,7 +65,7 @@ router.put('/:marcaId', async function(req,res){
         
     } catch (error) {
         console.log(error);
-        res.send('Ocurrio un error');
+        res.status(500).send('Ocurrio un error al consultar marca');
     }
 });
 

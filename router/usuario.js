@@ -1,12 +1,20 @@
 const { Router } = require('express');
 const router = Router();
 const Usuario = require('../models/Usuario');
+const {validarUsuario} = require('../helpers/validar-usuario');
+
 
 
 
 //Crear usuario
 router.post('/', async function(req,res){
     try{
+
+        const validaciones = validarUsuario(req);
+        if(validaciones.length > 0){
+            return res.status(400).send(validaciones);
+        }
+        
         console.log(req.body);
 
         //Validar número empleado
@@ -14,7 +22,7 @@ router.post('/', async function(req,res){
         console.log('RESPUESTA EXISTE USUARIO: ',existeUsuario);
 
         if(existeUsuario){
-            return res.send("Numero de empleado ya existe");
+            return res.status(400).send("Numero de empleado ya existe");
         }
 
         let usuario = new Usuario();
@@ -31,7 +39,7 @@ router.post('/', async function(req,res){
 
     }catch(error){
         console.log(error);
-        res.send('Ocurrio un error')
+        res.status(500).send('Ocurrio un error al consultar usuario')
     }
 
 
@@ -45,7 +53,7 @@ router.get('/',async function(req,res){
         res.send(usuarios);
     }catch(error){
         console.log(error);
-        res.send("Ocurrio un error")
+        res.status(500).send("Ocurrio un error al consultar usuario")
     }
 });
 
@@ -53,10 +61,16 @@ router.get('/',async function(req,res){
 //Actualizar usuario
 router.put('/:usuarioId', async function(req,res){
     try{
+
+        const validaciones = validarUsuario(req);
+        if(validaciones.length > 0){
+            return res.status(400).send(validaciones);
+        }
+
         console.log(req.body, req.params);
         let usuario = await Usuario.findById( req.params.usuarioId );
         if(!usuario){
-            return res.send('Usuario no existe');
+            return res.status(400).send('Usuario no existe');
         }
 
 
@@ -65,7 +79,7 @@ router.put('/:usuarioId', async function(req,res){
         console.log('RESPUESTA EXISTE USUARIO: ',existeUsuario);
 
         if(existeUsuario){
-            return res.send("Numero de empleado ya existe");
+            return res.status(400).send("Numero de empleado ya existe");
         }
         
         usuario.numero = req.body.numero;
@@ -78,7 +92,7 @@ router.put('/:usuarioId', async function(req,res){
 
     }catch(error){
         console.log(error);
-        res.send('Ocurrio un error');
+        res.status(500).send('Ocurrio un error al consultar usuario');
     }
 });
 
