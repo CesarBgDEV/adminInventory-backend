@@ -97,4 +97,19 @@ router.put('/:usuarioId', async function(req,res){
     }
 });
 
+
+router.get('/:usuarioId', async function(req, res){
+    try {
+        const usuario = await Usuario.findById(req.params.usuarioId);
+        if (!usuario) {
+            return res.status(400).send('Inventario no existe');
+        }
+        res.send(usuario);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Ocurrio un error al consultar usuarios')
+    }
+});
+
 module.exports = router;

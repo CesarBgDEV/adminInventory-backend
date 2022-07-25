@@ -118,7 +118,7 @@ router.get('/:inventarioId', async function(req, res){
         res.send(inventario);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Ocurrio un erro al consultar inventarios')
+        res.status(500).send('Ocurrio un error al consultar inventarios')
     }
 })
 
