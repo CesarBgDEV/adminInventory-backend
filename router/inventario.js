@@ -120,6 +120,6 @@ router.get('/:inventarioId', async function(req, res){
         console.log(error);
         res.status(500).send('Ocurrio un error al consultar inventarios')
     }
-})
+});
 
 module.exports = router;
