@@ -1,4 +1,4 @@
-const validarInventario = (req) =>{
+const validarTipoEquipo = (req) =>{
     const validaciones = [];
 
     if(!req.body.nombre){
@@ -14,5 +14,5 @@ const validarInventario = (req) =>{
 
 
 module.exports = {
-    validarInventario,
+    validarTipoEquipo,
 };
