@@ -66,4 +66,18 @@ router.put('/:tipoEquipoId', async function(req,res){
     }
 });
 
+router.get('/:tipoEquipoId', async function(req,res){
+    try {
+        const  tipoEquipo = await TipoEquipo.findById(req.params.tipoEquipo);
+        if(!tipoEquipo){
+            return res.status(400).send('Tipo de equipo no existe');
+        }
+        res.send(tipoEquipo);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Ocurrio un error al consultar tipo de equipo')
+    }
+})
+
 module.exports = router;
