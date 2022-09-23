@@ -25,3 +25,4 @@ app.use('/inventario', require('./router/inventario'));
 app.listen(port,()=>{
     console.log(`Example app listening on port ${port}`)
 });
+

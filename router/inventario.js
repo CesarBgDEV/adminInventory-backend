@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Inventario = require('../models/Inventario');
+const Usuario = require('../models/Usuario');
 const {validarInventario} = require('../helpers/validar-inventario');
 
 const router = Router();
@@ -109,16 +110,40 @@ router.put('/:inventarioId', async function(req,res){
 });
 
 
+
 router.get('/:inventarioId', async function(req, res){
     try {
         const inventario = await Inventario.findById(req.params.inventarioId);
         if(!inventario){
+            
             return res.status(404).send('Inventario no existe');
         }
         res.send(inventario);
     } catch (error) {
         console.log(error);
         res.status(500).send('Ocurrio un error al consultar inventarios')
+    }
+});
+
+router.get('/empleado/:usuarioId', async function(req, res){
+    try {
+        const empleado = await Usuario.findById(req.params.usuarioId);
+
+        const activosEmpleado = await Inventario.find({
+            usuario:{
+                $eq: empleado
+            }
+        })
+        if(!empleado){
+            console.log(empleado);
+            return res.status(404).send('Empelado no existe');
+        }
+
+        res.send(activosEmpleado)
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Ocurrio un error al consultar el empleado')
     }
 });
 
