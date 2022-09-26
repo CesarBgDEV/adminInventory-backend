@@ -24,6 +24,7 @@ router.get('/', async function(req,res){
             },
         ]);
         res.send(inventario);
+        console.log(inventario);
     } catch (error) {
         console.log(error);
         res.status(500).send("Ocurrio un error");
