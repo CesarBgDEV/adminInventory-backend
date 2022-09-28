@@ -128,15 +128,36 @@ router.get('/:inventarioId', async function(req, res){
 
 router.get('/empleado/:usuarioId', async function(req, res){
     try {
-        const empleado = await Usuario.findById(req.params.usuarioId);
+        // const empleado = await Usuario.findById(req.params.usuarioId);
+
+        // const activosEmpleado = await Inventario.find({
+        //     usuario:{
+        //         $eq: empleado
+        //     }
+        // })
 
         const activosEmpleado = await Inventario.find({
-            usuario:{
-                $eq: empleado
+            usuario: {
+
+                _id: req.params.usuarioId
             }
-        })
-        if(!empleado){
-            console.log(empleado);
+        }).populate([
+
+            {
+                path: 'usuario', select: 'nombre'
+            },
+            {
+                path: 'estadoEquipo', select: 'nombre'
+            },
+            {
+                path: 'marca', select: 'nombre'
+            },
+            {
+                path:  'tipoEquipo', select: 'nombre'
+            }
+        ])
+
+        if(!activosEmpleado){
             return res.status(404).send('Empelado no existe');
         }
 
