@@ -144,7 +144,7 @@ router.get('/empleado/:usuarioId', async function(req, res){
         }).populate([
 
             {
-                path: 'usuario', select: 'nombre'
+                path: 'usuario', select: 'nombre puesto'
             },
             {
                 path: 'estadoEquipo', select: 'nombre'

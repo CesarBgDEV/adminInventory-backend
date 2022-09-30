@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const EstadoEquipo = require('../models/EstadoEquipo');
 const {validarEstadoEquipo} = require('../helpers/validar-estadoEquipo');
+const { db } = require('../models/EstadoEquipo');
 
 
 const router = Router();
@@ -81,6 +82,13 @@ router.get('/:estadoEquipoId', async function(req, res){
         console.log(error);
         res.status(500).send('Ocurrio un error al consultar los Estados de Equipos')
     }
+})
+
+router.delete('/:estadoEquipoId', async function(req, res){
+    const estadoEquipo = await EstadoEquipo.findById(req.params.estadoEquipoId);
+
+    const result = estadoEquipo.deleteOne({_id: req.params.id})
+    res.send(result)
 })
 
 module.exports = router;
