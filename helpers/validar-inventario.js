@@ -11,9 +11,9 @@ const validarInventario = (req) =>{
     if(!req.body.descripcion){
         validaciones.push('descripcion es requerido');
     }
-    if(!req.body.serviceTag){
-        validaciones.push('service Tag es requerido');
-    }
+    // if(!req.body.serviceTag){
+    //     validaciones.push('service Tag es requerido');
+    // }
     if(!req.body.af){
         validaciones.push('af es requerido');
     }

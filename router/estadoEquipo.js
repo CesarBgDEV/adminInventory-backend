@@ -12,7 +12,6 @@ router.get('/', async function(req,res){
         const tipos = await EstadoEquipo.find();
         res.send(tipos);
     } catch (error) {
-        console.log(error);
         res.status(500).send("Ocurrio un error al consultar estado de equipo");
     }
 });
@@ -26,7 +25,6 @@ router.post('/', async function(req,res){
             return res.status(400).send(validaciones);
         }
 
-        console.log(req.body);
         let estadoEquipo = new EstadoEquipo();
 
         estadoEquipo.nombre = req.body.nombre;
@@ -39,7 +37,6 @@ router.post('/', async function(req,res){
         res.send(estadoEquipo);
 
     } catch (error) {
-        console.log(error);
         res.status(500).send("Ocurrio un error al consultar estado de equipo");
     }
 });
@@ -51,7 +48,6 @@ router.put('/:estadoEquipoId', async function(req,res){
             return res.status(400).send(validaciones);
         }
 
-        console.log(req.body, req.params);
         let estadoEquipo = await EstadoEquipo.findById(req.params.estadoEquipoId);
         if(!estadoEquipo){
             return res.status(400).send('Estado del equipo no existe');
@@ -64,7 +60,6 @@ router.put('/:estadoEquipoId', async function(req,res){
         res.send(estadoEquipo);
 
     } catch (error) {
-        console.log(error);
         res.status(500).send('Ocurrio un error al consultar estado de equipo');
     }
 });
@@ -79,7 +74,6 @@ router.get('/:estadoEquipoId', async function(req, res){
         res.send(estadoEquipo);
         
     } catch (error) {
-        console.log(error);
         res.status(500).send('Ocurrio un error al consultar los Estados de Equipos')
     }
 })

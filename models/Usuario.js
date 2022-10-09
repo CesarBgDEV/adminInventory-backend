@@ -16,6 +16,18 @@ const UsuarioSchema = Schema({
         type: String,
         required: true,
     },
+    area:{
+        type: String,
+        required: true,
+    },
+    curp:{
+        type: String,
+        required: true,
+    },
+    rfc:{
+        type: String,
+        required: true,
+    },
     estado:{
         type: String,
         required: true,

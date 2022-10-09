@@ -14,9 +14,9 @@ const InventarioSchema = Schema({
         type: String,
         required: true,
     },
-    serviceTag:{
-        type: String,
-    },
+    // serviceTag:{
+    //     type: String,
+    // },
     af:{
         type: Number,
     },

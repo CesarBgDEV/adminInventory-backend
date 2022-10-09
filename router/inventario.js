@@ -24,9 +24,7 @@ router.get('/', async function(req,res){
             },
         ]);
         res.send(inventario);
-        console.log(inventario);
     } catch (error) {
-        console.log(error);
         res.status(500).send("Ocurrio un error");
     }
 });
@@ -47,7 +45,7 @@ router.post('/', async function(req,res){
         inventario.serial = req.body.serial;
         inventario.modelo = req.body.modelo;
         inventario.descripcion = req.body.descripcion;
-        inventario.serviceTag = req.body.serviceTag;
+        // inventario.serviceTag = req.body.serviceTag;
         inventario.af = req.body.af;
         inventario.foto = req.body.foto;
         inventario.fechaEntrega = req.body.fechaEntrega;
@@ -63,7 +61,6 @@ router.post('/', async function(req,res){
 
         res.send(inventario);
     } catch (error) {
-        console.log(error);
         res.status(500).send("Ocurrio un error al consultar inventarios");
     }
 });
@@ -90,7 +87,7 @@ router.put('/:inventarioId', async function(req,res){
         inventario.serial = req.body.serial;
         inventario.modelo = req.body.modelo;
         inventario.descripcion = req.body.descripcion;
-        inventario.serviceTag = req.body.serviceTag;
+        // inventario.serviceTag = req.body.serviceTag;
         inventario.af = req.body.af;
         inventario.foto = req.body.foto;
         inventario.fechaEntrega = req.body.fechaEntrega;
@@ -105,7 +102,6 @@ router.put('/:inventarioId', async function(req,res){
 
         res.send(inventario);
     } catch (error) {
-        console.log(error);
         res.status(500).send("Ocurrio un error al consultar inventarios");
     }
 });
@@ -121,7 +117,6 @@ router.get('/:inventarioId', async function(req, res){
         }
         res.send(inventario);
     } catch (error) {
-        console.log(error);
         res.status(500).send('Ocurrio un error al consultar inventarios')
     }
 });
@@ -144,7 +139,7 @@ router.get('/empleado/:usuarioId', async function(req, res){
         }).populate([
 
             {
-                path: 'usuario', select: 'nombre puesto'
+                path: 'usuario', select: 'nombre puesto numero area curp rfc'
             },
             {
                 path: 'estadoEquipo', select: 'nombre'
@@ -164,7 +159,6 @@ router.get('/empleado/:usuarioId', async function(req, res){
         res.send(activosEmpleado)
         
     } catch (error) {
-        console.log(error);
         res.status(500).send('Ocurrio un error al consultar el empleado')
     }
 });

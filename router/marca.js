@@ -13,7 +13,6 @@ router.post('/', async function(req,res){
             return res.status(400).send(validaciones);
         }
 
-        console.log(req.body);
 
         let marca = new Marca();
         marca.nombre = req.body.nombre;
@@ -27,7 +26,6 @@ router.post('/', async function(req,res){
 
         
     } catch (error) {
-        console.log(error);
         res.status(500).send("Ocurrió un error al consultar marca");
     }
     
@@ -40,7 +38,6 @@ router.get('/', async function(req,res){
         const marcas = await Marca.find();
         res.send(marcas);
     } catch (error) {
-        console.log(error);
         res.status(500).send("Ocurrio un error al consultar marca");
     }
 });
@@ -51,7 +48,6 @@ router.put('/:marcaId', async function(req,res){
         if(validaciones.length > 0){
             return res.status(400).send(validaciones);
         }
-        console.log(req.body , req.params);
         let marca = await Marca.findById(req.params.marcaId);
         if(!marca){
             return res.status(400).send('Marca no existe');
@@ -64,7 +60,6 @@ router.put('/:marcaId', async function(req,res){
         res.send(marca);
         
     } catch (error) {
-        console.log(error);
         res.status(500).send('Ocurrio un error al consultar marca');
     }
 });
@@ -78,7 +73,6 @@ router.get('/:marcaId', async function(req, res){
         res.send(marca);
         
     } catch (error) {
-        console.log(error);
         res.status(500).send('Ocurrio un error al consultar marcas')
     }
 });
